@@ -1,0 +1,102 @@
+<?php
+require_once 'main.php';
+
+?>
+<?php require_once 'parts/header.php'; ?>
+
+<main class="main">
+    <div class="container">
+        <div class="row justify-content-end mb-2">
+            <div class="col-3 offset-md-4">
+                <div class="form-controls">
+                    <button id="add" type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
+                    </button>
+                    <select name="select" id="" class="select-control mr-3 form-control form-control-sm">
+                        <option value="1" selected>Please select</option>
+                        <option value="2">Set active</option>
+                        <option value="3">Set not active</option>
+                        <option value="4">Delete</option>
+                    </select>
+                    <button type="submit" class="btn btn-light btn-ok"> OK</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="checkAll">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Select ALL
+                                </label>
+                            </div>
+                        </th>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbody-table">
+                    <?php
+                    foreach ($facadeDB->selectAll() as $record) {?>
+                        <tr id="<?=$record['id']?>">
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input my-check-input" type="checkbox" value="<?=$record['id']?>" id="defaultCheck<?=$record['id']?>">
+                                    <label class="form-check-label" for="defaultCheck<?=$record['id']?>">
+                                    </label>
+                                </div>
+                            </td>
+                            <th scope="row"><?=$record['id']?></th>
+                            <td id="name">
+                                <?=$record['first_name'].' '. $record['last_name']?>
+                            </td>
+                            <td id="status"><?=$record['status']?></td>
+                            <td id="role"><?=$record['role']?></td>
+                            <td>
+                                <button type="button" data-method="edit" data-id="<?=$record['id']?>" class="btn btn-light btn-action-edit mr-2" data-toggle="modal" data-target="#userModal">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" data-method="delete" data-toggle="modal" data-target="#confirmDialogDelete" data-id="<?=$record['id']?>" class="btn btn-light btn-action-delete">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    <?php    }
+                    ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-end mt-2">
+            <div class="col-3">
+                <div class="form-controls">
+                    <button type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
+                    </button>
+                    <select name="select" id="" class="select-control mr-3 form-control form-control-sm">
+                        <option value="1">Please select</option>
+                        <option value="2">Set active</option>
+                        <option value="3">Set not active</option>
+                        <option value="4">Delete</option>
+                    </select>
+                    <button type="submit" class="btn btn-light btn-ok"> OK</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</main>
+<?php require_once 'parts/footer.php'; ?>
+`
