@@ -11,13 +11,13 @@ require_once 'main.php';
                 <div class="form-controls">
                     <button id="add" type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
                     </button>
-                    <select name="select" id="" class="select-control mr-3 form-control form-control-sm">
-                        <option value="1" selected>Please select</option>
-                        <option value="2">Set active</option>
-                        <option value="3">Set not active</option>
-                        <option value="4">Delete</option>
+                    <select name="select" class="select-group-action select-control mr-3 form-control form-control-sm">
+                        <option value="0" selected>Please select</option>
+                        <option value="groupActive">Set active</option>
+                        <option value="groupInactive">Set not active</option>
+                        <option value="groupDelete">Delete</option>
                     </select>
-                    <button type="submit" class="btn btn-light btn-ok"> OK</button>
+                    <button type="button" class="btn btn-light btn-ok"> OK</button>
                 </div>
 
             </div>
@@ -25,7 +25,7 @@ require_once 'main.php';
         <div class="row">
             <div class="col-12">
 
-                <table class="table table-striped">
+                <table class="table my-table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">
@@ -46,7 +46,7 @@ require_once 'main.php';
                     <tbody id="tbody-table">
                     <?php
                     foreach ($facadeDB->selectAll() as $record) {?>
-                        <tr id="<?=$record['id']?>">
+                        <tr id="<?=$record['id']?>" class="tr">
                             <td>
                                 <div class="form-check">
                                     <input class="form-check-input my-check-input" type="checkbox" value="<?=$record['id']?>" id="defaultCheck<?=$record['id']?>">
@@ -58,7 +58,10 @@ require_once 'main.php';
                             <td id="name">
                                 <?=$record['first_name'].' '. $record['last_name']?>
                             </td>
-                            <td id="status"><?=$record['status']?></td>
+                            <td id="status">
+                                <div class="text"><?=$record['status']?></div>
+                                <div class="circle <?php if($record['status'] === '1') echo 'green'; else echo 'red';?>"></div>
+                            </td>
                             <td id="role"><?=$record['role']?></td>
                             <td>
                                 <button type="button" data-method="edit" data-id="<?=$record['id']?>" class="btn btn-light btn-action-edit mr-2" data-toggle="modal" data-target="#userModal">
@@ -83,13 +86,13 @@ require_once 'main.php';
                 <div class="form-controls">
                     <button type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
                     </button>
-                    <select name="select" id="" class="select-control mr-3 form-control form-control-sm">
-                        <option value="1">Please select</option>
-                        <option value="2">Set active</option>
-                        <option value="3">Set not active</option>
-                        <option value="4">Delete</option>
+                    <select name="select" class="select-group-action select-control mr-3 form-control form-control-sm">
+                        <option value="0" selected>Please select</option>
+                        <option value="groupActive">Set active</option>
+                        <option value="groupInactive">Set not active</option>
+                        <option value="groupDelete">Delete</option>
                     </select>
-                    <button type="submit" class="btn btn-light btn-ok"> OK</button>
+                    <button type="button" class="btn btn-light btn-ok"> OK</button>
                 </div>
 
             </div>

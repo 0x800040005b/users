@@ -20,7 +20,7 @@ class FacadeDB implements IOprerationsDB
         return $sth->fetchAll(PDO::FETCH_ASSOC);
 
     }
-    public function insertUser( array $values)
+    public function insertUser($values)
     {
         $fistName = $values['first_name'];
         $lastName = $values['last_name'];
@@ -31,14 +31,14 @@ class FacadeDB implements IOprerationsDB
         $sth = $this->connection->prepare($this->query);
         return $sth->execute();
     }
-    public function selectByID(int $id){
+    public function selectByID($id){
         $this->query = "SELECT * FROM users WHERE `id` = $id";
         $sth = $this->connection->prepare($this->query);
         $sth->execute(array($id));
         return $sth->fetch(PDO::FETCH_ASSOC);
 
     }
-    public function deleteByID(int $id)
+    public function deleteByID($id)
     {
         $this->query = "DELETE FROM `users` WHERE `id` = ?";
         $sth = $this->connection->prepare($this->query);
@@ -46,14 +46,14 @@ class FacadeDB implements IOprerationsDB
 
 
     }
-    public function editByID(int $id, array $values)
+    public function editByID($id, $values)
     {
         $fistName = $values['first_name'];
         $lastName = $values['last_name'];
         $status = $values['status'];
         $role = $values['role'];
 
-        $this->query = "UPDATE `users` SET `first_name`='$fistName',`last_name`='$lastName',`status`='$status',`role`='$role' WHERE `id` = $id";
+        $this->query = "UPDATE `users` SET `first_name`='$fistName',`last_name`='$lastName',`status`='$status',`role`='$role' WHERE `id` IN($id) ";
         $sth = $this->connection->prepare($this->query);
         return $sth->execute(array($id));
 
@@ -67,4 +67,28 @@ class FacadeDB implements IOprerationsDB
         $sth->execute();
         return $sth->fetch(PDO::FETCH_COLUMN);
     }
+
+    /* Group Actions */
+
+    public function deleteGroupByID($ids)
+    {
+
+        $this->query = "DELETE FROM `users` WHERE `id` IN($ids)";
+        $sth = $this->connection->prepare($this->query);
+        return $sth->execute();
+
+
+    }
+    public function statusGroupByID($ids, $status)
+    {
+        $this->query = "UPDATE `users` SET `status`='$status' WHERE `id` IN($ids) ";
+        $sth = $this->connection->prepare($this->query);
+        return $sth->execute();
+
+    }
+
+    /* Group Actions END */
+
+
+
 }

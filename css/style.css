@@ -3,6 +3,16 @@
     align-items: center;
 }
 
+#status .text{
+    opacity: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+
+}
+
 .my-alert{
     position: absolute;
     top: -100%;
@@ -20,4 +30,18 @@
     transform: translateX(-50%);
     z-index: 1;
     transition: all 0.5s ease;
+}
+
+
+.circle{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #000000;
+}
+.circle.green{
+    background-color: #31A24C;
+}
+.circle.red{
+    background-color: #F61301;
 }

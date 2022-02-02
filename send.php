@@ -16,6 +16,16 @@ if (strcasecmp($_POST['method'],'add') === 0) {
     insert();
 }
 
+if((strcasecmp($_POST['method'],'groupDelete') === 0)){
+    deleteGroupByID();
+}
+if((strcasecmp($_POST['method'],'groupActive') === 0)){
+    statusGroupByID('1');
+}
+if((strcasecmp($_POST['method'],'groupInactive') === 0)){
+    statusGroupByID('0');
+}
+
 
 
 
@@ -24,8 +34,15 @@ function delete(){
     global $facadeDB;
     $result = $facadeDB->deleteByID($_POST['id']);
     if($result){
+        header("HTTP/1.0 200 OK ");
         echo json_encode(['id' => $_POST['id']]);
+        return;
     }
+
+    header("HTTP/1.0 203 Non-Authoritative Information");
+    echo json_encode(['text' => 'DOn\'t deleted users']);
+
+
 }
 /* Edit User */
 function select(){
@@ -99,6 +116,43 @@ function insert(){
     echo json_encode(['text' => 'Non-Authoritative Information']);
 
 }
+
+/* Group Actions */
+function deleteGroupByID(){
+    global $facadeDB;
+    $values = implode(',', $_POST['ids']);
+
+    $result = $facadeDB->deleteGroupByID($values);
+    if($result){
+        header('HTTP/1.0 200 OK');
+        echo json_encode(['data' => $_POST['ids'],'text' => 'deleted successfully']);
+        return;
+    }
+
+    header('HTTP/1.0 404 Not Found');
+    echo json_encode(['text' => 'you can\'t deleted these users']);
+
+
+}
+function statusGroupByID($status){
+    global $facadeDB;
+    $values = implode(',', $_POST['ids']);
+
+    $result = $facadeDB->statusGroupByID($values,$status);
+    if($result){
+        header('HTTP/1.0 200 OK');
+        echo json_encode(['data' => $_POST['ids'], 'status' => $status, 'text' => 'status changed successfully']);
+        return;
+    }
+
+    header('HTTP/1.0 404 Not Found');
+    echo json_encode(['text' => 'you can\'t set status for selected users']);
+
+
+}
+
+
+/* Group Actions END */
 
 
 
