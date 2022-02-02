@@ -97,7 +97,7 @@
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script>
 
-<script src="../js/main.js"></script>
+
 <script>
     $(document).ready(function () {
 
@@ -308,8 +308,6 @@
 
                     },
                     success: function (data) {
-
-
                         data.data.status === '1' ? circleElement = `<div class="circle green"></div>` : circleElement = `<div class="circle red"></div>`
 
                         let trHTML = `
@@ -342,13 +340,17 @@
                         </tr>
  `;
                         tBodyTable.append(trHTML);
+                        alert.text(data.text)
+                        successAlert();
                         resetInterface();
                         method = null;
                         id = null;
 
                     },
                     error: function (data, status, error) {
-                        console.log(error);
+                        console.log(data);
+                        alert.text(data.responseJSON.text);
+                        errorAlert();
                         method = null;
                         resetInterface();
                     },
@@ -550,5 +552,6 @@
     });
 
 </script>
+
 </body>
 </html>

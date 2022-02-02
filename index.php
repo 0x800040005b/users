@@ -6,7 +6,7 @@ require_once 'main.php';
 
 <main class="main">
     <div class="container">
-        <div class="row justify-content-end mb-2">
+        <div class="row justify-content-end mb-2 p-2">
             <div class="col-3 offset-md-4">
                 <div class="form-controls">
                     <button id="add" type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add

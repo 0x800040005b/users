@@ -91,7 +91,7 @@ function insert(){
     global  $facadeDB;
     if(empty($_POST['last_name']) || empty($_POST['first_name'])){
         header("HTTP/1.0 404 Not Found");
-        echo json_encode(['text' => 'You Can\'t to insert these Values']);
+        echo json_encode(['text' => 'You Can\'t to insert empty Values']);
         return;
     }
 
