@@ -19,7 +19,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form" id="formUser" action="#" method="post">
                     <div class="row mb-2">
                         <div class="col">
                             <input type="text" class="form-control" name="first_name" placeholder="First name">
@@ -50,7 +49,6 @@
                         </div>
 
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button id="btn-user" type="button" data-dismiss="modal" class="btn btn-primary">Add User</button>
@@ -103,6 +101,10 @@
 
         /* front-end */
 
+        let url = 'http://users.loc/send.php';
+        let requestMethod = 'POST';
+        let dataType = 'JSON';
+
         let selectAllCheckbox = $("#checkAll");
 
         let btnAdd = $('.btn-add');
@@ -110,8 +112,8 @@
         let btnOK = $('.btn-ok');
         let btnConfirmDelete = $('.btn-confirm-delete');
 
-        let inputFirstName = $("#formUser .form-control[name='first_name']");
-        let inputLastName = $("#formUser .form-control[name='last_name']");
+        let inputFirstName = $(".form-control[name='first_name']");
+        let inputLastName = $(".form-control[name='last_name']");
 
         let isActiveCheckbox = $('#flexSwitchCheckChecked');
         let roleOptions = $("#role option");
@@ -206,6 +208,21 @@
 
 
         /* Edit OR Add User Functions */
+        function buttonAddFunction() {
+            method = 'add';
+
+            inputFirstName.val('');
+            inputLastName.val('');
+            isActiveCheckbox.attr('checked', 'checked');
+            roleOptions.each(function () {
+                $(this).removeAttr('selected');
+
+            });
+
+            title.text('Add User');
+            btnUser.text('Add User');
+
+        }
         function buttonEditSelectFunction() {
             id = $(this).attr('data-id');
             method = 'edit';
@@ -214,9 +231,9 @@
             btnUser.text('Edit User');
 
             $.ajax({
-                url: 'http://users.loc/send.php',
-                method: "POST",
-                dataType: 'JSON',
+                url: url,
+                method: requestMethod,
+                dataType: dataType,
                 data: {
                     "method": method,
                     "id": id,
@@ -235,21 +252,20 @@
 
                 },
                 error: function (data) {
-                    console.log('error: ' + data);
+                    alert.text('error');
+                    errorAlert();
                 },
             });
 
         }
-
         function buttonUserUpdateFunction() {
             if (method === 'edit') {
                 method = 'update';
                 let is_active = isActiveCheckbox.is(':checked') ? '1' : '0';
-                console.log('ss');
                 $.ajax({
-                    url: 'http://users.loc/send.php',
-                    method: "POST",
-                    dataType: 'JSON',
+                    url: url,
+                    method: requestMethod,
+                    dataType: dataType,
                     data: {
                         "method": method,
                         "id": id,
@@ -277,7 +293,7 @@
                         alert.text(data.text);
                         successAlert();
                         method = null;
-                        resetInterface();
+                        reset();
 
 
                     },
@@ -285,7 +301,7 @@
                         alert.text(data.responseJSON);
                         errorAlert();
                         method = null;
-                        resetInterface()
+                        reset()
 
 
                     },
@@ -296,9 +312,9 @@
             if (method === 'add') {
                 let is_active = isActiveCheckbox.is(':checked') ? '1' : '0';
                 $.ajax({
-                    url: 'http://users.loc/send.php',
-                    method: "POST",
-                    dataType: 'JSON',
+                    url: url,
+                    method: requestMethod,
+                    dataType: dataType,
                     data: {
                         "method": method,
                         'role': roleOptions.filter(":selected").val(),
@@ -342,38 +358,22 @@
                         tBodyTable.append(trHTML);
                         alert.text(data.text)
                         successAlert();
-                        resetInterface();
+                        reset();
                         method = null;
                         id = null;
 
                     },
-                    error: function (data, status, error) {
+                    error: function (data) {
                         console.log(data);
                         alert.text(data.responseJSON.text);
                         errorAlert();
                         method = null;
-                        resetInterface();
+                        reset();
                     },
                 });
 
 
             }
-
-        }
-
-        function buttonAddFunction() {
-            method = 'add';
-
-            inputFirstName.val('');
-            inputLastName.val('');
-            isActiveCheckbox.attr('checked', 'checked');
-            roleOptions.each(function () {
-                $(this).removeAttr('selected');
-
-            });
-
-            title.text('Add User');
-            btnUser.text('Add User');
 
         }
 
@@ -383,16 +383,15 @@
             id = $(this).attr('data-id');
             method = $(this).attr('data-method');
         }
-
         function buttonConfirmDeleteFunction() {
 
             if ($(this).attr('data-confirm') === 'yes') {
 
 
                 $.ajax({
-                    url: 'http://users.loc/send.php',
-                    method: 'POST',
-                    dataType: 'JSON',
+                    url: url,
+                    method: requestMethod,
+                    dataType: dataType,
                     data: {
                         "method": method,
                         "id": id,
@@ -400,11 +399,13 @@
                     success: function (data) {
                         deleteUserFront(id);
                         method = null;
-                        resetInterface();
+                        reset();
                     },
                     error: function (data) {
+                        alert.text('delete failed');
+                        errorAlert();
                         method = null;
-                        resetInterface();
+                        reset();
                     },
                 });
 
@@ -420,22 +421,19 @@
             if ((method !== '0' && method !== null) && ids.length > 0) {
                 if (method === 'groupDelete') {
                     $.ajax({
-                        url: 'http://users.loc/send.php',
-                        method: 'POST',
-                        dataType: 'JSON',
+                        url: url,
+                        method: requestMethod,
+                        dataType: dataType,
                         data: {
                             "method": method,
                             "ids": ids,
                         },
                         success: function (data) {
                             deleteUserFront(data.data);
-                            method = null;
-                            resetInterface();
-
                             alert.text(data.text);
                             successAlert();
                             method = null;
-                            resetInterface();
+                            reset();
 
 
                         },
@@ -443,7 +441,7 @@
                             alert.text(data.responseText);
                             errorAlert();
                             method = null;
-                            resetInterface();
+                            reset();
 
                         },
                     });
@@ -451,20 +449,19 @@
                 }
                 if (method === 'groupActive' || method === 'groupInactive') {
                     $.ajax({
-                        url: 'http://users.loc/send.php',
-                        method: 'POST',
-                        dataType: 'JSON',
+                        url: url,
+                        method: requestMethod,
+                        dataType: dataType,
                         data: {
                             "method": method,
                             "ids": ids,
                         },
                         success: function (data) {
-                            console.log(data);
                             changeStatusFront(data.data, data.status);
                             alert.text(data.text);
                             successAlert();
                             method = null;
-                            resetInterface();
+                            reset();
 
 
                         },
@@ -472,7 +469,7 @@
                             alert.text(data.responseText);
                             errorAlert();
                             method = null;
-                            resetInterface();
+                            reset();
 
                         },
                     });
@@ -490,7 +487,6 @@
 
             method = $(this).find('option:selected').val();
         }
-
         function changeStatusFront(ids, status) {
             if (Array.isArray(ids)) {
                 ids.forEach((item) => {
@@ -510,7 +506,6 @@
         function getCountChecksFunction() {
             return $('.my-check-input').length;
         }
-
         function checkCheckboxes() {
             count = getCountChecksFunction();
             if ($(this).prop('checked'))
@@ -525,7 +520,6 @@
                 selectAllCheckbox.prop('checked', false);
 
         }
-
         function deleteUserFront(id) {
             if (Array.isArray(id)) {
                 id.forEach((item) => {
@@ -536,8 +530,7 @@
 
             }
         }
-
-        function resetInterface() {
+        function reset() {
             selectGroupAction.each(function () {
                 $(this).find('option').first().prop("selected", true);
             });

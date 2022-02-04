@@ -1,5 +1,4 @@
 <?php
-require_once 'functions.php';
 require_once 'Interfaces/IOprerationsDB.php';
 require_once 'classes/DB.php';
 require_once 'classes/FacadeDB.php';
@@ -12,7 +11,8 @@ try {
 
 
 
+
 } catch (Exception $exception) {
-    echo "Error: " . $exception->getMessage();
+    echo "Error: ";
 }
 ?>

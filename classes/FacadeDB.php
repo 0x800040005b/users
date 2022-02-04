@@ -7,13 +7,14 @@ class FacadeDB implements IOprerationsDB
     private $query;
 
     public function __construct($connection){
-        if($connection instanceof PDO)
+        if($connection instanceof PDO && !is_null($connection))
             $this->connection = $connection;
     }
 
 
     public function selectAll()
     {
+        
         $this->query = "SELECT * FROM users";
         $sth = $this->connection->prepare($this->query);
         $sth->execute();

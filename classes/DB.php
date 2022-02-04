@@ -25,8 +25,9 @@ class DB
 //                echo "connected successfully";
 
             } catch (PDOException $PDOException) {
-                echo "connection failed: " . $PDOException->getMessage();
+                echo "connection failed.";
                 $this->disconnect();
+                die;
 
             }
         }
