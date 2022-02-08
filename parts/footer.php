@@ -73,7 +73,7 @@
                 Do you want to delete this user?
             </div>
             <div class="modal-footer">
-                <button type="button" data-confirm="no" class="btn btn-secondary"
+                <button type="button" data-confirm="no" class="btn btn-secondary btn-confirm-delete"
                         data-dismiss="modal">No
                 </button>
                 <button type="button" data-confirm="yes" data-dismiss="modal" aria-label="Close"

@@ -33,7 +33,7 @@ $(document).ready(function () {
     let ids = [];
     let id = null;
     let method = null;
-    let count = null; // для мультивибіра
+    let count = null; // для мультивибору.
     let currentSelect = null;
 
 
@@ -285,6 +285,8 @@ $(document).ready(function () {
     function buttonDeleteFunction() {
         id = $(this).attr('data-id');
         method = $(this).attr('data-method');
+        confirmDialogDelete.find('.modal-body').text('Do you want to delete this user?');
+        confirmDialogDelete.find('#userModalLabel').text('Delete user?');
     }
 
     function buttonConfirmDeleteFunction() {
@@ -343,6 +345,7 @@ $(document).ready(function () {
             }
 
         }
+        reset();
 
 
     }
@@ -352,6 +355,7 @@ $(document).ready(function () {
 
     function btnGroupOKFunction() {
          let correctSelect = $(this).attr('data-group') === currentSelect;
+
 
         if ((method !== '0' && method !== null) && ids.length > 0  && correctSelect) {
             if (method === 'groupActive' || method === 'groupInactive') {
@@ -381,6 +385,8 @@ $(document).ready(function () {
                     },
                 });
 
+            }else{
+                deleteGroupFront();
             }
 
 
@@ -394,19 +400,7 @@ $(document).ready(function () {
     function selectGroupActionFunction() {
         method = $(this).find('option:selected').val();
         currentSelect = $(this).attr('data-group');
-
-        if (method === 'groupDelete' && ids.length > 0) {
-            btnOK.attr('data-toggle', 'modal');
-            btnOK.attr('data-target', '#confirmDialogDelete');
-            confirmDialogDelete.find('.modal-body').text('Do you want to delete these users?');
-
-        } else {
-            btnOK.removeAttr('data-toggle');
-            btnOK.removeAttr('data-target');
-            confirmDialogDelete.find('.modal-body').text('Do you want to delete this user?');
-
-
-        }
+        deleteGroupFront();
     }
 
     function changeStatusFront(ids, status) {
@@ -440,6 +434,22 @@ $(document).ready(function () {
             selectAllCheckbox.prop('checked', true);
         else
             selectAllCheckbox.prop('checked', false);
+
+    }
+    function deleteGroupFront(){
+        if (method === 'groupDelete' && ids.length > 0) {
+            btnOK.attr('data-toggle', 'modal');
+            btnOK.attr('data-target', '#confirmDialogDelete');
+            confirmDialogDelete.find('.modal-body').text('Do you want to delete these users?');
+            confirmDialogDelete.find('#userModalLabel').text('Delete Users?')
+
+        } else {
+            btnOK.removeAttr('data-toggle');
+            btnOK.removeAttr('data-target');
+
+
+
+        }
 
     }
 
