@@ -10,12 +10,10 @@ if (strcasecmp($_POST['method'],'edit') === 0) {
 if (strcasecmp($_POST['method'],'update') === 0) {
     update();
 }
-
 if (strcasecmp($_POST['method'],'add') === 0) {
 
     insert();
 }
-
 if((strcasecmp($_POST['method'],'groupDelete') === 0)){
     deleteGroupByID();
 }
@@ -89,7 +87,7 @@ function update(){
 /* Insert User*/
 function insert(){
     global  $facadeDB;
-    if(empty($_POST['last_name']) || empty($_POST['first_name'])){
+    if(empty($_POST['last_name']) || empty($_POST['first_name']) || empty($_POST['role'])){
         header("HTTP/1.0 404 Not Found");
         echo json_encode(['text' => 'You Can\'t to insert empty Values']);
         return;

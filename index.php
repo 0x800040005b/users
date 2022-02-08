@@ -11,13 +11,13 @@ require_once 'main.php';
                 <div class="form-controls">
                     <button id="add" type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
                     </button>
-                    <select name="select" class="select-group-action select-control mr-3 form-control form-control-sm">
+                    <select  name="select" data-group="select-1" class="select-group-action select-control mr-3 form-control form-control-sm">
                         <option value="0" selected>Please select</option>
                         <option value="groupActive">Set active</option>
                         <option value="groupInactive">Set not active</option>
                         <option value="groupDelete">Delete</option>
                     </select>
-                    <button type="button" class="btn btn-light btn-ok"> OK</button>
+                    <button type="button" data-group="select-1" class="btn btn-light btn-ok"> OK</button>
                 </div>
 
             </div>
@@ -86,13 +86,13 @@ require_once 'main.php';
                 <div class="form-controls">
                     <button type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
                     </button>
-                    <select name="select" class="select-group-action select-control mr-3 form-control form-control-sm">
+                    <select name="select" data-group="select-2" class="select-group-action select-control mr-3 form-control form-control-sm">
                         <option value="0" selected>Please select</option>
                         <option value="groupActive">Set active</option>
                         <option value="groupInactive">Set not active</option>
                         <option value="groupDelete">Delete</option>
                     </select>
-                    <button type="button" class="btn btn-light btn-ok"> OK</button>
+                    <button type="button" data-group="select-2" class="btn btn-light btn-ok"> OK</button>
                 </div>
 
             </div>

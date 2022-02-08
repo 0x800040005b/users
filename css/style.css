@@ -45,3 +45,7 @@
 .circle.red{
     background-color: #F61301;
 }
+
+.col-form-label{
+    font-weight: bold;
+}
