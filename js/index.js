@@ -110,11 +110,12 @@ $(document).ready(function () {
 
     /* Edit OR Add User Functions */
     function buttonAddFunction() {
+
         method = 'add';
 
         inputFirstName.val('');
         inputLastName.val('');
-        isActiveCheckbox.attr('checked', 'checked');
+        isActiveCheckbox.prop('checked', true);
         roleOptions.each(function () {
             $(this).removeAttr('selected');
 

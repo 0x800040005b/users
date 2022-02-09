@@ -9,8 +9,7 @@ require_once 'main.php';
         <div class="row justify-content-end mb-2 p-2">
             <div class="col-3 offset-md-4">
                 <div class="form-controls">
-                    <button id="add" type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
-                    </button>
+                    <button id="add" type="button" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add </button>
                     <select  name="select" data-group="select-1" class="select-group-action select-control mr-3 form-control form-control-sm">
                         <option value="0" selected>Please select</option>
                         <option value="groupActive">Set active</option>
@@ -84,8 +83,7 @@ require_once 'main.php';
         <div class="row justify-content-end mt-2">
             <div class="col-3">
                 <div class="form-controls">
-                    <button type="submit" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add
-                    </button>
+                    <button type="button" class="btn btn-light mr-3 btn-add" data-toggle="modal" data-target="#userModal"> Add </button>
                     <select name="select" data-group="select-2" class="select-group-action select-control mr-3 form-control form-control-sm">
                         <option value="0" selected>Please select</option>
                         <option value="groupActive">Set active</option>
@@ -99,7 +97,7 @@ require_once 'main.php';
         </div>
 
     </div>
+    <!-- data-toggle="modal" data-target="#userModal"-->
 
 </main>
 <?php require_once 'parts/footer.php'; ?>
-`
