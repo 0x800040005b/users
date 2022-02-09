@@ -142,7 +142,6 @@ $(document).ready(function () {
 
             },
             success: function (data) {
-                console.log(data);
                 inputFirstName.val(data.first_name);
                 inputLastName.val(data.last_name);
                 data.status === '1' ? isActiveCheckbox.prop('checked', true) : isActiveCheckbox.prop('checked', false);
@@ -228,7 +227,7 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     data.data.status === '1' ? circleElement = `<div class="circle green"></div>` : circleElement = `<div class="circle red"></div>`
-                    console.log(data);
+
                     let trHTML = `
                            <tr id="${data.data.id}">
                             <td>
@@ -267,7 +266,6 @@ $(document).ready(function () {
 
                 },
                 error: function (data) {
-                    console.log(data);
                     alert.text(data.responseJSON.text);
                     errorAlert();
                     method = null;
