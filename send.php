@@ -57,7 +57,7 @@ function select(){
 function update(){
     global $facadeDB;
     if(empty($_POST['last_name']) || empty($_POST['first_name'])){
-        header("HTTP/1.0 404 Not Found");
+        header("HTTP/1.0 403 Forbidden");
         echo json_encode('You Can\'t to update these Values');
         return;
     }

@@ -27,6 +27,7 @@ $(document).ready(function () {
     let confirmDialogDelete = $('#confirmDialogDelete');
     let tBodyTable = $('#tbody-table');
     let selectGroupAction = $('.select-group-action');
+    let formError = $('.form-error');
 
     /* front-end END */
 
@@ -41,7 +42,7 @@ $(document).ready(function () {
 
     /* Edit OR Add User */
     table.on('click', '.btn-action-edit', buttonEditSelectFunction);
-    $(document).on('click', "#btn-user", buttonUserUpdateFunction);
+    $(document).on('click', "#btn-user", buttonUserUpdateOrAddFunction);
 
 
     /* Add User */
@@ -59,6 +60,7 @@ $(document).ready(function () {
 
     table.on('change', '.my-check-input', checkCheckboxes);
     table.on('click', '#checkAll', function () {
+        ids.splice(0, ids.length);
         if ($(this).prop('checked')) {
             $('.my-check-input').each(function () {
                 $(this).prop('checked', true);
@@ -67,10 +69,11 @@ $(document).ready(function () {
         } else {
             $('.my-check-input').each(function () {
                 $(this).prop('checked', false);
-                ids.splice($.inArray($(this).val, ids), 1);
+
             });
 
         }
+
     });
     btnOK.on({
         'click': btnGroupOKFunction
@@ -123,6 +126,7 @@ $(document).ready(function () {
 
         title.text('Add User');
         btnUser.text('Add User');
+        formError.text('');
 
     }
 
@@ -132,6 +136,7 @@ $(document).ready(function () {
 
         title.text('Edit User');
         btnUser.text('Edit User');
+        formError.text('');
 
         $.ajax({
             url: url,
@@ -161,7 +166,7 @@ $(document).ready(function () {
 
     }
 
-    function buttonUserUpdateFunction() {
+    function buttonUserUpdateOrAddFunction() {
         if (method === 'edit') {
             method = 'update';
             let is_active = isActiveCheckbox.is(':checked') ? '1' : '0';
@@ -196,13 +201,13 @@ $(document).ready(function () {
                     alert.text(data.text);
                     successAlert();
                     reset();
+                    $('#userModal').modal('hide');
 
 
                 },
                 error: function (data) {
-                    alert.text(data.responseJSON);
-                    errorAlert();
-                    reset()
+                    formError.text(data.responseJSON);
+                    method = 'edit';
 
 
                 },
@@ -225,8 +230,6 @@ $(document).ready(function () {
 
                 },
                 success: function (data) {
-                    console.log(data);
-                    return;
                     data.data.status === '1' ? circleElement = `<div class="circle active-status"></div>` : circleElement = `<div class="circle not-active-status"></div>`
 
                     let trHTML = `
@@ -264,12 +267,11 @@ $(document).ready(function () {
                     successAlert();
                     reset();
                     id = null;
+                    $('#userModal').modal('hide');
 
                 },
                 error: function (data) {
-                    alert.text(data.responseJSON.text);
-                    errorAlert();
-                    reset();
+                    formError.text(data.responseJSON.text);
                 },
             });
 
@@ -468,6 +470,7 @@ $(document).ready(function () {
         btnOK.removeAttr('data-toggle');
         btnOK.removeAttr('data-target');
         method = null;
+        formError.text('');
 
 
     }

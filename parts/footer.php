@@ -19,6 +19,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="form-error text-danger"></div>
+                    </div>
+
+                </div>
                     <div class="row mb-2">
                         <div class="col">
                             <label for="first-name" class="col-form-label">First Name:</label>
