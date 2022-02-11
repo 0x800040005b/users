@@ -52,7 +52,7 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button id="btn-user" type="button" data-dismiss="modal" class="btn btn-primary">Add User</button>
+                <button id="btn-user" type="button" class="btn btn-primary">Add User</button>
             </div>
         </div>
     </div>

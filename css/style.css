@@ -39,11 +39,11 @@
     border-radius: 50%;
     background-color: #000000;
 }
-.circle.green{
+.active-status{
     background-color: #31A24C;
 }
-.circle.red{
-    background-color: #F61301;
+.not-active-status{
+    background-color: #cecece;
 }
 
 .col-form-label{

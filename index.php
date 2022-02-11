@@ -59,7 +59,7 @@ require_once 'main.php';
                             </td>
                             <td id="status">
                                 <div class="text"><?=$record['status']?></div>
-                                <div class="circle <?php if($record['status'] === '1') echo 'green'; else echo 'red';?>"></div>
+                                <div class="circle <?php if($record['status'] === '1') echo 'active-status'; else echo 'not-active-status';?>"></div>
                             </td>
                             <td id="role"><?=$record['role']?></td>
                             <td>

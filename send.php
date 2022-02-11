@@ -88,7 +88,7 @@ function update(){
 function insert(){
     global  $facadeDB;
     if(empty($_POST['last_name']) || empty($_POST['first_name']) || empty($_POST['role'])){
-        header("HTTP/1.0 404 Not Found");
+        header("HTTP/1.0 403 Forbidden");
         echo json_encode(['text' => 'You Can\'t to insert empty Values']);
         return;
     }

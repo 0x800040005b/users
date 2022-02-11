@@ -184,18 +184,17 @@ $(document).ready(function () {
                     tr.find('td#name').text(data.data.first_name + ' ' + data.data.last_name);
                     circle = tr.find('td#status .circle');
                     if (data.data.status === '1') {
-                        circle.removeClass('red');
-                        circle.addClass('green');
+                        circle.removeClass('not-active-status');
+                        circle.addClass('active-status');
                     } else {
-                        circle.removeClass('green')
-                        circle.addClass('red');
+                        circle.removeClass('active-status')
+                        circle.addClass('not-active-status');
                     }
                     tr.find('td#status .text').text(data.data.status);
                     tr.find('td#role').text(data.data.role);
 
                     alert.text(data.text);
                     successAlert();
-                    method = null;
                     reset();
 
 
@@ -203,7 +202,6 @@ $(document).ready(function () {
                 error: function (data) {
                     alert.text(data.responseJSON);
                     errorAlert();
-                    method = null;
                     reset()
 
 
@@ -214,7 +212,7 @@ $(document).ready(function () {
         }
         if (method === 'add') {
             let is_active = isActiveCheckbox.is(':checked') ? '1' : '0';
-            $.ajax({
+            let request = $.ajax({
                 url: url,
                 method: requestMethod,
                 dataType: dataType,
@@ -227,7 +225,9 @@ $(document).ready(function () {
 
                 },
                 success: function (data) {
-                    data.data.status === '1' ? circleElement = `<div class="circle green"></div>` : circleElement = `<div class="circle red"></div>`
+                    console.log(data);
+                    return;
+                    data.data.status === '1' ? circleElement = `<div class="circle active-status"></div>` : circleElement = `<div class="circle not-active-status"></div>`
 
                     let trHTML = `
                            <tr id="${data.data.id}">
@@ -260,16 +260,15 @@ $(document).ready(function () {
  `;
                     tBodyTable.append(trHTML);
                     alert.text(data.text);
+
                     successAlert();
                     reset();
-                    method = null;
                     id = null;
 
                 },
                 error: function (data) {
                     alert.text(data.responseJSON.text);
                     errorAlert();
-                    method = null;
                     reset();
                 },
             });
@@ -304,7 +303,7 @@ $(document).ready(function () {
                         deleteUserFront(data.data);
                         alert.text(data.text);
                         successAlert();
-                        method = null;
+
                         reset();
 
 
@@ -312,7 +311,6 @@ $(document).ready(function () {
                     error: function (data) {
                         alert.text(data.responseText);
                         errorAlert();
-                        method = null;
                         reset();
 
                     },
@@ -331,13 +329,12 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         deleteUserFront(id);
-                        method = null;
+
                         reset();
                     },
                     error: function (data) {
                         alert.text('delete failed');
                         errorAlert();
-                        method = null;
                         reset();
                     },
                 });
@@ -370,7 +367,6 @@ $(document).ready(function () {
                         changeStatusFront(data.data, data.status);
                         alert.text(data.text);
                         successAlert();
-                        method = null;
                         reset();
 
 
@@ -378,7 +374,7 @@ $(document).ready(function () {
                     error: function (data) {
                         alert.text(data.responseText);
                         errorAlert();
-                        method = null;
+
                         reset();
 
                     },
@@ -392,22 +388,20 @@ $(document).ready(function () {
         } else {
             alert.text('You need to sure that you choices users and choices right action');
             errorAlert();
-            reset();
         }
     }
 
     function selectGroupActionFunction() {
         method = $(this).find('option:selected').val();
         currentSelect = $(this).attr('data-group');
-        deleteGroupFront();
     }
 
     function changeStatusFront(ids, status) {
         if (Array.isArray(ids)) {
             ids.forEach((item) => {
                 $('#' + item).find("#status .text").text(status);
-                status === '1' ? $('#' + item).find("#status .circle").removeClass('red').addClass('green')
-                    : $('#' + item).find("#status .circle").removeClass('green').addClass('red')
+                status === '1' ? $('#' + item).find("#status .circle").removeClass('not-active-status').addClass('active-status')
+                    : $('#' + item).find("#status .circle").removeClass('active-status').addClass('not-active-status')
 
 
             });
@@ -436,7 +430,7 @@ $(document).ready(function () {
 
     }
     function deleteGroupFront(){
-        if (method === 'groupDelete' && ids.length > 0) {
+        if (ids.length > 0) {
             btnOK.attr('data-toggle', 'modal');
             btnOK.attr('data-target', '#confirmDialogDelete');
             confirmDialogDelete.find('.modal-body').text('Do you want to delete these users?');
@@ -473,6 +467,8 @@ $(document).ready(function () {
         ids.splice(0, ids.length);
         btnOK.removeAttr('data-toggle');
         btnOK.removeAttr('data-target');
+        method = null;
+
 
     }
 
